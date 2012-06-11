@@ -1,0 +1,39 @@
+Package: Rttf2pt1
+Title: Package for ttf2pt1 program
+Version: 1.0
+Author: Winston Chang <winston@stdout.org>,
+    Andrew Weeks <ccsaw@bath.ac.uk>,
+    Frank M. Siegert <fms@this.net>,
+    Mark Heath <mheath@netspace.net.au>,
+    Thomas Henlich <thenlich@rcs.urz.tu-dresden.de>,
+    Sergey Babkin <babkin@users.sourceforge.net>,
+    Turgut Uyar <uyar@cs.itu.edu.tr>,
+    Rihardas Hepas <rch@WriteMe.Com>,
+    Szalay Tamas <tomek@elender.hu>,
+    Johan Vromans <jvromans@squirrel.nl>,
+    Petr Titera <P.Titera@sh.cvut.cz>,
+    Lei Wang <lwang@amath8.amt.ac.cn>,
+    Chen Xiangyang <chenxy@sun.ihep.ac.cn>,
+    Zvezdan Petkovic <z.petkovic@computer.org>,
+    Rigel <rigel863@yahoo.com>,
+    Turgut Uyar <uyar@cs.itu.edu.tr>,
+    Rihardas Hepas <rch@WriteMe.Com>,
+    Szalay Tamas <tomek@elender.hu> ,
+    Johan Vromans <jvromans@squirrel.nl>,
+    Petr Titera <P.Titera@sh.cvut.cz>,
+    Frank M. Siegert <frank@this.net>,
+    Lei Wang <lwang@amath8.amt.ac.cn>,
+    Chen Xiangyang <chenxy@sun.ihep.ac.cn>,
+    Zvezdan Petkovic <z.petkovic@computer.org>,
+    Rigel <rigel863@yahoo.com>,
+    I. Lee Hetherington <ilh@lcs.mit.edu>
+Maintainer: Winston Chang <winston@stdout.org>
+Description: This package contains the program ttf2pt1, for use with the
+    extrafont package. This product includes software developed by the TTF2PT1
+    Project and its contributors.
+Depends:
+    R (>= 2.14)
+License: file LICENSE
+URL: https://github.com/wch/ttf2pt1
+Collate:
+    'extrafont.r'
