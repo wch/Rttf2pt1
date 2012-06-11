@@ -36,4 +36,4 @@ Depends:
 License: file LICENSE
 URL: https://github.com/wch/ttf2pt1
 Collate:
-    'extrafont.r'
+    'Rttf2pt1.r'
