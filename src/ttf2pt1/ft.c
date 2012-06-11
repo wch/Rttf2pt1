@@ -615,4 +615,9 @@ kerning(
 	}
 }
 
+#else
+/* This is here just to make sure that this file is not empty
+ * after preprocessing.
+ */
+typedef int dummy;
 #endif
