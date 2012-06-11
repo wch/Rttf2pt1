@@ -1,10 +1,9 @@
 # Rttf2pt1
 
-The Rttf2p1 package for R is meant to be used with the extrafont package.
-It is in its own package for licensing reasons.
+The Rttf2p1 package for R is meant to be used with the [exrtafont](https://github.com/wch/extrafont) package.
 
-This package contains the source code for the utility program `ttf2pt1`.
-It will be compiled on installation, so you need a build environment on your system (unless you install fonts as a precompiled package from CRAN).
+This package contains the utility program `ttf2pt1`, and is in its own package for licensing reasons.
+It will be compiled on installation, so you need a build environment on your system.
 
 # Licensing notes
 
