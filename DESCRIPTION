@@ -1,23 +1,22 @@
 Package: Rttf2pt1
 Title: Package for ttf2pt1 program
 Version: 1.0
-Authors@R: c(person("Winston", "Chang", email="winston@stdout.org",
-    role=c("ctb", "cre")), person("Andrew", "Weeks", email="ccsaw@bath.ac.uk",
-    role="ctb"), person("Frank M.", "Siegert", email="fms@this.net",
-    role="ctb"), person("Mark", "Heath", email="mheath@netspace.net.au",
-    role="ctb"), person("Thomas", "Henlich",
-    email="thenlich@rcs.urz.tu-dresden.de", role="ctb"), person("Sergey",
-    "Babkin", email="babkin@users.sourceforge.net", role="ctb"),
-    person("Turgut", "Uyar", email="uyar@cs.itu.edu.tr", role="ctb"),
-    person("Rihardas", "Hepas", email="rch@WriteMe.Com", role="ctb"),
-    person("Szalay", "Tamas", email="tomek@elender.hu", role="ctb"),
-    person("Johan", "Vromans", email="jvromans@squirrel.nl", role="ctb"),
-    person("Petr", "Titera", email="P.Titera@sh.cvut.cz", role="ctb"),
-    person("Lei", "Wang", email="lwang@amath8.amt.ac.cn", role="ctb"),
-    person("Chen", "Xiangyang", email="chenxy@sun.ihep.ac.cn", role="ctb"),
-    person("Zvezdan", "Petkovic", email="z.petkovic@computer.org", role="ctb"),
-    person("Rigel", email="rigel863@yahoo.com", role="ctb"), person("I. Lee",
-    "Hetherington", email="ilh@lcs.mit.edu", role="ctb"))
+Author: Winston Chang,
+    Andrew Weeks,
+    Frank M. Siegert,
+    Mark Heath,
+    Thomas Henlick,
+    Sergey Babkin,
+    Turgut Uyar,
+    Rihardas Hepas,
+    Szalay Tamas,
+    Johan Vromans,
+    Petr Titera,
+    Lei Wang,
+    Chen Xiangyang,
+    Zvezdan Petkovic,
+    Rigel,
+    I. Lee Hetherington
 Maintainer: Winston Chang <winston@stdout.org>
 Description: This package contains the program ttf2pt1, for use with the
     extrafont package. This product includes software developed by the TTF2PT1
