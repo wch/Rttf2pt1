@@ -1,0 +1,11 @@
+Version 1.1
+------------------------------------------------------------------------------
+
+* Force building a 32-bit binary for Windows, by adding the -m32 flag
+  to gcc in src/Makefile.win, because CRAN builds a 64-bit binary by
+  default, which doesn't work on all systems.
+
+* Added a fallback check for the exec/i386/ directory on Mac, because
+  CRAN puts it there by default.
+
+* Changed the format of the author list in DESCRIPTION.
