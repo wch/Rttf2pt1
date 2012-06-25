@@ -1,8 +1,8 @@
 CC = `"$(R_HOME)/bin/R" CMD config CC`
 CFLAGS = `"$(R_HOME)/bin/R" CMD config CFLAGS`
 
-# CFLAGS for ttf2pt1
-TTF2PT1_CFLAGS = $(CFLAGS) -DWINDOWS
+# CFLAGS for ttf2pt1 - force 32-bit binary
+TTF2PT1_CFLAGS = $(CFLAGS) -m32 -DWINDOWS
 
 # Run make in subdirs
 all:
