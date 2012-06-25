@@ -15,6 +15,11 @@ which_ttf2pt1 <- function() {
   if (.Platform$OS.type == "unix") {
     bin <- "ttf2pt1"
     binpath <- file.path(inst_path(), "exec", .Platform$r_arch, bin)
+
+    # Fallback: manually try i386 if the r_arch version doesn't exist
+    if (!file.exists(binpath))
+      binpath <- file.path(inst_path(), "exec", "i386", bin)
+
   } else if (.Platform$OS.type == "windows") {
     bin <- "ttf2pt1.exe"
     binpath <- file.path(inst_path(), "exec", bin)
