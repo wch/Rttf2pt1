@@ -6,3 +6,10 @@ package.
 The sources for ttf2pt1 have the following changes from the original version 3.4.4:
 
 * The file `ft.c` was modified so that, when compiled with the `-pedantic` flag, the compiler doesn't complain about an empty file.
+
+
+## freetype2
+
+The sources for Freetype 2 are unchanged from version 2.0.8. This version
+is used because the ttf2pt1 Makefile references it directly. With later
+versions of Freetype 2 (>2.1.1), ttf2pt1 won't build properly.
