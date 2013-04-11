@@ -23,7 +23,7 @@ Description: This package contains the program ttf2pt1, for use with the
     Project and its contributors.
 Depends:
     R (>= 2.15)
-License: X11 + file LICENSE
+License: BSD_3_clause
 URL: https://github.com/wch/Rttf2pt1
 Collate:
     'Rttf2pt1.r'
