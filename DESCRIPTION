@@ -25,5 +25,3 @@ Depends:
     R (>= 2.15)
 License: BSD_3_clause + file LICENSE
 URL: https://github.com/wch/Rttf2pt1
-Collate:
-    'Rttf2pt1.r'
