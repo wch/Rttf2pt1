@@ -10,6 +10,9 @@ NULL
 
 
 #' Returns the path to the executable for ttf2pt1
+#' @examples
+#' which_ttf2pt1()
+#'
 #' @export
 which_ttf2pt1 <- function() {
   if (.Platform$OS.type == "unix") {

@@ -7,4 +7,7 @@ which_ttf2pt1()
 \description{
 Returns the path to the executable for ttf2pt1
 }
+\examples{
+which_ttf2pt1()
+}
 
