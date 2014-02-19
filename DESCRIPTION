@@ -23,5 +23,5 @@ Description: This package contains the program ttf2pt1, for use with the
     Project and its contributors.
 Depends:
     R (>= 2.15)
-License: BSD_3_clause + file LICENSE
+License: file LICENSE
 URL: https://github.com/wch/Rttf2pt1
