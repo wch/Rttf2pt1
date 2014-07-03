@@ -5,9 +5,9 @@ CFLAGS = `"$(R_HOME)/bin/R" CMD config CFLAGS`
 # Disable a bunch of warnings because they cause problems with R CMD check
 # as of R 3.1.1
 TTF2PT1_CFLAGS = $(CFLAGS) \
-	-Wno-comment -Wno-format -Wno-logical-op-parentheses -Wno-pointer-sign \
-	-Wno-unused-function -Wno-unused-variable -Wno-parentheses \
-	-Wno-unused-label
+  -Wno-comment -Wno-format -Wno-logical-op-parentheses -Wno-pointer-sign \
+  -Wno-unused-function -Wno-unused-variable -Wno-parentheses \
+  -Wno-unused-label
 
 # Run make in subdirs
 all:
