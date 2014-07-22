@@ -2390,7 +2390,7 @@ main(
     fprintf(afm_file, "FamilyName %s\n", fontm.name_family);
     fprintf(afm_file, "Weight %s\n", fontm.name_style);
     fprintf(afm_file, "Version %s\n", fontm.name_version);
-    fprintf(afm_file, "Characters %d\n", nchars);
+    /* fprintf(afm_file, "Characters %d\n", nchars); */
     fprintf(afm_file, "ItalicAngle %.1f\n", italic_angle);
 
     fprintf(afm_file, "Ascender %d\n", iscale(fontm.ascender));
