@@ -1,13 +1,13 @@
 CC = `"$(R_HOME)/bin/R" CMD config CC`
 CFLAGS = `"$(R_HOME)/bin/R" CMD config CFLAGS`
 
-# CFLAGS for ttf2pt1 - force 32-bit binary
+# CFLAGS for ttf2pt1
 # Disable a bunch of warnings because they cause problems with R CMD check
-# as of R 3.1.1
-TTF2PT1_CFLAGS = $(CFLAGS) -m32 -DWINDOWS \
-  -Wno-comment -Wno-format -Wno-logical-op-parentheses -Wno-pointer-sign \
+# as of R 3.1.1 - updated for R 3.3
+TTF2PT1_CFLAGS = $(CFLAGS) -DWINDOWS \
+  -Wno-comment -Wno-format -Wno-pointer-sign -no-maybe-uninitialized\
   -Wno-unused-function -Wno-unused-variable -Wno-parentheses \
-  -Wno-unused-label
+  -Wno-unused-label -no-unused-but-set-variable -no-unused-value
 
 # Run make in subdirs
 all:
