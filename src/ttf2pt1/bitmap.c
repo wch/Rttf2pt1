@@ -1996,7 +1996,7 @@ bmp_outline(
 					for(i=1; i<len; i++, pge = pge->frwd)
 						for(d = GEXFI_CONVEX; d<= GEXFI_CONCAVE; d++) {
 							if(X_FRAG(pge)->len[d]) {
-								fprintf(stderr, "    removed %s frag at %p len=%d covered by line\n", 
+								fprintf(stderr, "    removed %s frag at %p len=%d covered by line %d\n", 
 									gxf_name[d], pge, X_FRAG(pge)->len[d], len);
 								good = 0;
 							}

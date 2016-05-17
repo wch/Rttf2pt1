@@ -41,3 +41,19 @@ which_ttf2pt1 <- function() {
   else
     return(binpath)
 }
+
+
+# Borrowed this from staticdocs
+inst_path <- function() {
+  envname <- environmentName(environment(inst_path))
+
+  # If installed in package, envname == "Rttf2pt1"
+  # If loaded with load_all, envname == "package:Rttf2pt1"
+  # (This is kind of strange)
+  if (envname == "Rttf2pt1") {
+    system.file(package = "Rttf2pt1")
+  } else {
+    srcfile <- attr(attr(inst_path, "srcref"), "srcfile")
+    file.path(dirname(dirname(srcfile$filename)), "inst")
+  }
+}

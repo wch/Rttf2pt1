@@ -1,18 +1,10 @@
 CC = `"$(R_HOME)/bin/R" CMD config CC`
 CFLAGS = `"$(R_HOME)/bin/R" CMD config CFLAGS`
 
-# CFLAGS for ttf2pt1
-# Disable a bunch of warnings because they cause problems with R CMD check
-# as of R 3.1.1
-TTF2PT1_CFLAGS = $(CFLAGS) \
-  -Wno-comment -Wno-format -Wno-logical-op-parentheses -Wno-pointer-sign \
-  -Wno-unused-function -Wno-unused-variable -Wno-parentheses \
-  -Wno-unused-label
-
 # Run make in subdirs
 all:
 	echo "make ttf2pt1 in ttf2pt1/ ..."
-	(cd ttf2pt1; $(MAKE) CC="$(CC)" CFLAGS="$(TTF2PT1_CFLAGS)" ttf2pt1)
+	(cd ttf2pt1; $(MAKE) CC="$(CC)" CFLAGS="$(CFLAGS)" ttf2pt1)
 
 clean:
 	echo "make veryclean in ttf2pt1/ ..."
