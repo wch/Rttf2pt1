@@ -1,13 +1,22 @@
 CC = `"$(R_HOME)/bin/R" CMD config CC`
 CFLAGS = `"$(R_HOME)/bin/R" CMD config CFLAGS`
 
-# CFLAGS for ttf2pt1 - force 32-bit binary
+# Makeconf is not sourced for Makefile.win
+include $(R_HOME)/etc/$(R_ARCH)/Makeconf
+
+# CFLAGS for ttf2pt1
 # Disable a bunch of warnings because they cause problems with R CMD check
-# as of R 3.1.1
-TTF2PT1_CFLAGS = $(CFLAGS) -m32 -DWINDOWS \
+# as of R 3.1.1.
+# Forcing 32 bit fails on gcc-4.9.3 so we remove it if COMPILED_BY is set
+ifeq ($(strip $(COMPILED_BY)),)
+ARCH = -m32
+endif
+
+TTF2PT1_CFLAGS = $(CFLAGS) $(ARCH) -DWINDOWS \
   -Wno-comment -Wno-format -Wno-logical-op-parentheses -Wno-pointer-sign \
   -Wno-unused-function -Wno-unused-variable -Wno-parentheses \
-  -Wno-unused-label
+  -Wno-unused-label -Wno-maybe-uninitialized -Wno-unused-but-set-variable \
+  -Wno-unused-value
 
 # Run make in subdirs
 all:
