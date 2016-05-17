@@ -3908,7 +3908,7 @@ fstraighten(
 
 			if(ge != pge) { 
 				if( pge->type == GE_LINE && pge->fpoints[i][2] == pge->prev->fpoints[i][2]
-				&& fabs(pge->fpoints[o][2] != pge->prev->fpoints[o][2]) ) {
+				&& abs(pge->fpoints[o][2] != pge->prev->fpoints[o][2]) ) {
 					if(ISDBG(STRAIGHTEN)) fprintf(stderr,"** straighten join with previous 0x%x 0x%x\n", pge, ge);
 					/* join the previous line with current */
 					pge->fx3 = ge->fx3;
@@ -3923,7 +3923,7 @@ fstraighten(
 
 			if(ge != nge) { 
 				if (nge->type == GE_LINE && nge->fpoints[i][2] == ge->fpoints[i][2]
-				&& fabs(nge->fpoints[o][2] != ge->fpoints[o][2]) ) {
+				&& abs(nge->fpoints[o][2] != ge->fpoints[o][2]) ) {
 					if(ISDBG(STRAIGHTEN)) fprintf(stderr,"** straighten join with next 0x%x 0x%x\n", ge, nge);
 					/* join the next line with current */
 					ge->fx3 = nge->fx3;
