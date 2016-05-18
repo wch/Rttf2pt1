@@ -19,7 +19,7 @@ Author: Winston Chang,
     I. Lee Hetherington
 Maintainer: Winston Chang <winston@stdout.org>
 Description: Contains the program 'ttf2pt1', for use with the
-    extrafont package. This product includes software developed by the TTF2PT1
+    'extrafont' package. This product includes software developed by the 'TTF2PT1'
     Project and its contributors.
 Depends:
     R (>= 2.15)
