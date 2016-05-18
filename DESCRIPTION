@@ -1,5 +1,5 @@
 Package: Rttf2pt1
-Title: Package for ttf2pt1 program
+Title: 'ttf2pt1' Program
 Version: 1.3.4
 Author: Winston Chang,
     Andrew Weeks,
@@ -18,7 +18,7 @@ Author: Winston Chang,
     Rigel,
     I. Lee Hetherington
 Maintainer: Winston Chang <winston@stdout.org>
-Description: Contains the program ttf2pt1, for use with the
+Description: Contains the program 'ttf2pt1', for use with the
     extrafont package. This product includes software developed by the TTF2PT1
     Project and its contributors.
 Depends:
