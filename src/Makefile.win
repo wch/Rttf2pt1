@@ -1,17 +1,8 @@
 CC = `"$(R_HOME)/bin/R" CMD config CC`
 CFLAGS = `"$(R_HOME)/bin/R" CMD config CFLAGS`
 
-# Makeconf is not sourced for Makefile.win
-include $(R_HOME)/etc/$(R_ARCH)/Makeconf
-
-# CFLAGS for ttf2pt1
 # Disable a bunch of warnings because they cause problems with R CMD check
 # as of R 3.1.1.
-# Forcing 32 bit fails on gcc-4.9.3 so we remove it if COMPILED_BY is set
-ifeq ($(strip $(COMPILED_BY)),)
-ARCH = -m32
-endif
-
 TTF2PT1_CFLAGS = $(CFLAGS) $(ARCH) -DWINDOWS \
   -Wno-comment -Wno-format -Wno-logical-op-parentheses -Wno-pointer-sign \
   -Wno-unused-function -Wno-unused-variable -Wno-parentheses \
@@ -19,9 +10,10 @@ TTF2PT1_CFLAGS = $(CFLAGS) $(ARCH) -DWINDOWS \
   -Wno-unused-value
 
 # Run make in subdirs
+# Makeconf is not sourced for Makefile.win, so it needs to be explicitly included.
 all:
 	echo "make ttf2pt1 in ttf2pt1/ ..."
-	(cd ttf2pt1; $(MAKE) CC="$(CC)" CFLAGS="$(TTF2PT1_CFLAGS)" ttf2pt1)
+	(cd ttf2pt1; $(MAKE) -f"${R_HOME}/etc${R_ARCH}/Makeconf" -fMakefile CC="$(CC)" CFLAGS="$(TTF2PT1_CFLAGS)" ttf2pt1)
 
 clean:
 	echo "make veryclean in ttf2pt1/ ..."
