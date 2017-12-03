@@ -1,3 +1,14 @@
+Version 1.3.5
+------------------------------------------------------------------------------
+
+* Fixed compilation issues on Windows when it does not have short filename
+  support (at the suggestion of Tomas Kalibera).
+
+Version 1.3.4
+------------------------------------------------------------------------------
+
+* Fixed compilation on Windows for R 3.3.
+
 Version 1.3.1
 ------------------------------------------------------------------------------
 
