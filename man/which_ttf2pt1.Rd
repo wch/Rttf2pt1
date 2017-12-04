@@ -13,4 +13,3 @@ Returns the path to the executable for ttf2pt1
 which_ttf2pt1()
 
 }
-

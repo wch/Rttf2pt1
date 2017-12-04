@@ -6,8 +6,8 @@ if (WINDOWS) {
 
 } else {
   files <- file.path("ttf2pt1", "ttf2pt1")
- # Default installation (from R extensions doc)
- print(R_ARCH)
+  # Default installation (from R extensions doc)
+  print(R_ARCH)
   execarch <- if (nzchar(R_ARCH)) paste('exec', R_ARCH, sep='') else 'exec'
 }
 
