@@ -1591,7 +1591,7 @@ bmp_outline(
 						ge = ge->frwd;
 						if(ge == cge->next && !stepmore)
 							delaystop = 1; /* consider the first gentry again */
-					} while(stepmore || ge != cge->next ^ delaystop);
+					} while(stepmore || (ge != cge->next) ^ delaystop);
 					/* see if there is an unfinished line left */
 					if(count != 1) {
 #if 0
