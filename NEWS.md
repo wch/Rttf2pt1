@@ -1,5 +1,5 @@
-Version 1.3.6.9000
-------------------------------------------------------------------------------
+Version 1.3.7
+-------------
 
 * Small fix to stop a compiler warning from the `-Wparentheses` flag, which raised a WARNING.
 
