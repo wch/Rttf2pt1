@@ -1938,7 +1938,7 @@ main(
 			break;
 		case 'v':
 			correctvsize = atoi(optarg);
-			if(correctvsize <= 0 && correctvsize > 1000) {
+			if(correctvsize <= 0 || correctvsize > 1000) {
 				fprintf(stderr, "**** wrong vsize '%d', ignored ****\n", correctvsize);
 				correctvsize=0;
 			}
