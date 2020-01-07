@@ -1,3 +1,8 @@
+Version 1.3.8
+-------------
+
+* Small fix to stop a compiler warning with clang 10, which raised a WARNING.
+
 Version 1.3.7
 -------------
 
