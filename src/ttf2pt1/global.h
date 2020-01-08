@@ -105,8 +105,8 @@ extern int      numglyphs;
 #	define DBG_TO_GLYPH(g) DISABLEDBG( strcmp( (g)->name, DBG_GLYPH ) )
 #	define DBG_FROM_GLYPH(g) ENABLEDBG(1)
 #else
-#	define DBG_TO_GLYPH(g) (0)
-#	define DBG_FROM_GLYPH(g) (0)
+#	define DBG_TO_GLYPH(g) ((void)0)
+#	define DBG_FROM_GLYPH(g) ((void)0)
 #endif
 
 /* prototypes */
