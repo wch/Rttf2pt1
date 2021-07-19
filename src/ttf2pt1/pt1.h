@@ -252,6 +252,7 @@ void print_kerning( FILE *afm_file);
 int fcrossrayscv( double curve[4][2], double *max1, double *max2);
 int fcrossraysge( GENTRY *ge1, GENTRY *ge2, double *max1, double *max2,
 	double crossdot[2][2]);
-double fdotsegdist2( double seg[2][2], double dot[2]);
+// double fdotsegdist2( double seg[2][2], double dot[2]);
+double fdotsegdist2( double** seg, double dot[2]);
 double fdotcurvdist2( double curve[4][2], struct dot_dist *dots, int ndots, double *maxp);
 void fapproxcurve( double cv[4][2], struct dot_dist *dots, int ndots);
