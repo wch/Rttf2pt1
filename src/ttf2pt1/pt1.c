@@ -4937,7 +4937,8 @@ fcrossraysge(
 	GENTRY *ge2,
 	double *max1,
 	double *max2,
-	double crossdot[2][2]
+	double** crossdot
+	// double crossdot[2][2]
 )
 {
 	ray[0].x1 = ge1->prev->fx3;
@@ -4957,7 +4958,7 @@ fcrossraysge(
 	}
 	ray[1].maxp = max2;
 
-	return fcrossraysxx(crossdot);
+	return fcrossraysxx((double (*)[2])crossdot);
 }
 
 /* debugging printout functions */
@@ -4993,7 +4994,8 @@ printseg(
 
 double
 fdotsegdist2(
-	double seg[2][2 /*X,Y*/],
+	double** seg,
+	// double seg[2][2 /*X,Y*/],
 	double dot[2 /*X,Y*/]
 )
 {
@@ -5216,13 +5218,13 @@ fdotcurvdist2(
 		/* the nearest segment must include the nearest dot */
 		if(id1==0) {
 			dots[d].seg = 0;
-			dots[d].dist2 = fdotsegdist2(&cvd[0], dots[d].p);
+			dots[d].dist2 = fdotsegdist2((double**)&cvd[0], dots[d].p);
 		} else if(id1==NAPSECT) {
 			dots[d].seg = NAPSECT-1;
-			dots[d].dist2 = fdotsegdist2(&cvd[NAPSECT-1], dots[d].p);
+			dots[d].dist2 = fdotsegdist2((double**)&cvd[NAPSECT-1], dots[d].p);
 		} else {
-			dist1 = fdotsegdist2(&cvd[id1], dots[d].p);
-			dist2 = fdotsegdist2(&cvd[id1-1], dots[d].p);
+			dist1 = fdotsegdist2((double**)&cvd[id1], dots[d].p);
+			dist2 = fdotsegdist2((double**)&cvd[id1-1], dots[d].p);
 			if(dist2 < dist1) {
 				dots[d].seg = id1-1;
 				dots[d].dist2 = dist2;
@@ -5469,7 +5471,7 @@ fjointsin2(
 		d[0][axis] = -( d[1][axis] *= scale1 );
 		d[2][axis] *= scale2;
 	}
-	return fdotsegdist2(d, d[2]);
+	return fdotsegdist2((double**)d, d[2]);
 }
 
 #if 0
@@ -5661,7 +5663,7 @@ fanalyzege(
 			dots[1][i] = ge->fpoints[i][2];
 			dots[2][i] = fcvval(ge, i, 0.5);
 		}
-		avsd2 = fdotsegdist2(dots, dots[2]);
+		avsd2 = fdotsegdist2((double**)dots, dots[2]);
 		if(avsd2 <= CVEPS2) {
 			gex->flags |= GEXF_FLAT;
 		}
@@ -5821,7 +5823,7 @@ try_flatboth:
 			dots[1][i] = nge->fpoints[i][2];
 			dots[2][i] = ge->fpoints[i][2];
 		}
-		if( fdotsegdist2(dots, dots[2]) <= CVEPS2)
+		if( fdotsegdist2((double**)dots, dots[2]) <= CVEPS2)
 			gex->flags |= GEXF_JLINE;
 	}
 }
@@ -6046,7 +6048,7 @@ fconcisecontour(
 
 			fnormalizege(&tpge);
 			fnormalizege(&tnge);
-			if( fcrossraysge(&tpge, &tnge, NULL, NULL, &apcv[1]) ) {
+			if( fcrossraysge(&tpge, &tnge, NULL, NULL, (double**)&apcv[1]) ) {
 				apcv[0][X] = tpge.bkwd->fx3;
 				apcv[0][Y] = tpge.bkwd->fy3;
 				/* apcv[1] and apcv[2] were filled by fcrossraysge() */
@@ -6201,7 +6203,7 @@ next:
 				}
 				ndots++;
 				for(i=0; i<ndots; i++) {
-					avsd2 = fdotsegdist2(apcv, dots[i].p);
+					avsd2 = fdotsegdist2((double**)apcv, dots[i].p);
 					if(avsd2 > CVEPS2)
 						break;
 				}
@@ -6229,7 +6231,7 @@ next:
 				}
 				ndots++;
 				for(i=0; i<ndots; i++) {
-					avsd2 = fdotsegdist2(apcv, dots[i].p);
+					avsd2 = fdotsegdist2((double**)apcv, dots[i].p);
 					if(avsd2 > CVEPS2)
 						break;
 				}

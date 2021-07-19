@@ -1,3 +1,8 @@
+Version 1.3.9
+-------------
+
+* Small fix to stop a compiler warning with gcc11, which raised a WARNING.
+
 Version 1.3.8
 -------------
 
