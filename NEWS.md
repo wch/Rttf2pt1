@@ -1,3 +1,8 @@
+Version 1.3.10
+-------------
+
+* Fixed signed/unsigned type mismatches.
+
 Version 1.3.9
 -------------
 
