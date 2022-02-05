@@ -567,7 +567,7 @@ extern int      runt1asm(int);
 
 static DEF_BITMAP(uni_user_buckets, 1<<BUCKET_ID_BITS);
 
-static unsigned int unicode_map[ENCTABSZ]; /* font-encoding to unicode map */
+static int unicode_map[ENCTABSZ]; /* font-encoding to unicode map */
 static int enctabsz = 256; /* actual number of codes used */
 
 static void
@@ -1148,7 +1148,7 @@ unicode_prepare_buckets(
 
 static char *
 nametoprint(
-	unsigned char *s
+	char *s
 )
 {
 	static char res[50];
@@ -1496,7 +1496,7 @@ handle_gnames(void)
 
 char *
 dupcnstring(
-	unsigned char *s,
+	char *s,
 	int len
 )
 {

@@ -117,7 +117,7 @@ void bmp_outline( GLYPH *g, int scale, char *bmap,
 	int xsz, int ysz, int xoff, int yoff);
 int isign( int x);
 int fsign( double x);
-char *dupcnstring( unsigned char *s, int len);
+char *dupcnstring( char *s, int len);
 
 /* global metrics for a font */
 
