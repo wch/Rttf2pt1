@@ -298,13 +298,13 @@ assertpath(
 		if( (ge->flags & GEF_FLOAT) ^ isfloat ) {
 			fprintf(stderr, "**! assertpath: called from %s line %d (%s) ****\n", file, line, name);
 			fprintf(stderr, "float flag changes from %s to %s at 0x%p (type %c, prev type %c)\n",
-				(isfloat ? "TRUE" : "FALSE"), (isfloat ? "FALSE" : "TRUE"), ge, ge->type, pe->type);
+				(isfloat ? "TRUE" : "FALSE"), (isfloat ? "FALSE" : "TRUE"), (void*)ge, ge->type, pe->type);
 			abort();
 		}
 		if (pe != ge->prev) {
 			fprintf(stderr, "**! assertpath: called from %s line %d (%s) ****\n", file, line, name);
-			fprintf(stderr, "unidirectional chain 0x%x -next-> 0x%x -prev-> 0x%x \n",
-				pe, ge, ge->prev);
+			fprintf(stderr, "unidirectional chain 0x%p -next-> 0x%p -prev-> 0x%p \n",
+				(void*)pe, (void*)ge, (void*)ge->prev);
 			abort();
 		}
 
@@ -314,7 +314,7 @@ assertpath(
 		case GE_PATH:
 			if (ge->prev == 0) {
 				fprintf(stderr, "**! assertpath: called from %s line %d (%s) ****\n", file, line, name);
-				fprintf(stderr, "empty path at 0x%x \n", ge);
+				fprintf(stderr, "empty path at 0x%p \n", (void*)ge);
 				abort();
 			}
 			break;
@@ -322,24 +322,24 @@ assertpath(
 		case GE_CURVE:
 			if(ge->frwd->bkwd != ge) {
 				fprintf(stderr, "**! assertpath: called from %s line %d (%s) ****\n", file, line, name);
-				fprintf(stderr, "unidirectional chain 0x%x -frwd-> 0x%x -bkwd-> 0x%x \n",
-					ge, ge->frwd, ge->frwd->bkwd);
+				fprintf(stderr, "unidirectional chain 0x%p -frwd-> 0x%p -bkwd-> 0x%p \n",
+					(void*)ge, (void*)ge->frwd, (void*)ge->frwd->bkwd);
 				abort();
 			}
 			if(ge->prev->type == GE_MOVE) {
 				first = ge;
 				if(ge->bkwd->next->type != GE_PATH) {
 					fprintf(stderr, "**! assertpath: called from %s line %d (%s) ****\n", file, line, name);
-					fprintf(stderr, "broken first backlink 0x%x -bkwd-> 0x%x -next-> 0x%x \n",
-						ge, ge->bkwd, ge->bkwd->next);
+					fprintf(stderr, "broken first backlink 0x%p -bkwd-> 0x%p -next-> 0x%p \n",
+						(void*)ge, (void*)ge->bkwd, (void*)ge->bkwd->next);
 					abort();
 				}
 			}
 			if(ge->next->type == GE_PATH) {
 				if(ge->frwd != first) {
 					fprintf(stderr, "**! assertpath: called from %s line %d (%s) ****\n", file, line, name);
-					fprintf(stderr, "broken loop 0x%x -...-> 0x%x -frwd-> 0x%x \n",
-						first, ge, ge->frwd);
+					fprintf(stderr, "broken loop 0x%p -...-> 0x%p -frwd-> 0x%p \n",
+						(void*)first, (void*)ge, (void*)ge->frwd);
 					abort();
 				}
 			}
@@ -760,7 +760,7 @@ fixcvends(
 		return;
 
 	if(ge->flags & GEF_FLOAT) {
-		fprintf(stderr, "**! fixcvends(0x%x) on floating entry, ABORT\n", ge);
+		fprintf(stderr, "**! fixcvends(0x%p) on floating entry, ABORT\n", (void*)ge);
 		abort(); /* dump core */
 	}
 
@@ -910,7 +910,7 @@ fixcvdir(
 	int             fdir, rdir;
 
 	if(ge->flags & GEF_FLOAT) {
-		fprintf(stderr, "**! fixcvdir(0x%x) on floating entry, ABORT\n", ge);
+		fprintf(stderr, "**! fixcvdir(0x%p) on floating entry, ABORT\n", (void*)ge);
 		abort(); /* dump core */
 	}
 
@@ -1040,7 +1040,7 @@ fgetcvdir(
 	int             dir = 0;
 
 	if( !(ge->flags & GEF_FLOAT) ) {
-		fprintf(stderr, "**! fgetcvdir(0x%x) on int entry, ABORT\n", ge);
+		fprintf(stderr, "**! fgetcvdir(0x%p) on int entry, ABORT\n", (void*)ge);
 		abort(); /* dump core */
 	}
 
@@ -1102,7 +1102,7 @@ igetcvdir(
 	int             dir = 0;
 
 	if(ge->flags & GEF_FLOAT) {
-		fprintf(stderr, "**! igetcvdir(0x%x) on floating entry, ABORT\n", ge);
+		fprintf(stderr, "**! igetcvdir(0x%p) on floating entry, ABORT\n", (void*)ge);
 		abort(); /* dump core */
 	}
 
@@ -1200,7 +1200,7 @@ dumppaths(
 	for(ge = g->entries; ge != 0; ge = ge->next) {
 		if(ge == start)
 			mark = '*';
-		fprintf(stderr, " %c %8x", mark, ge);
+		fprintf(stderr, " %c %8p", mark, (void*)ge);
 		switch(ge->type) {
 		case GE_MOVE:
 		case GE_LINE:
@@ -1333,7 +1333,7 @@ fcheckcv(
 )
 {
 	if( !(ge->flags & GEF_FLOAT) ) {
-		fprintf(stderr, "**! fcheckcv(0x%x) on int entry, ABORT\n", ge);
+		fprintf(stderr, "**! fcheckcv(0x%p) on int entry, ABORT\n", (void*)ge);
 		abort(); /* dump core */
 	}
 
@@ -1361,7 +1361,7 @@ icheckcv(
 	int             xdep, ydep;
 
 	if(ge->flags & GEF_FLOAT) {
-		fprintf(stderr, "**! icheckcv(0x%x) on floating entry, ABORT\n", ge);
+		fprintf(stderr, "**! icheckcv(0x%p) on floating entry, ABORT\n", (void*)ge);
 		abort(); /* dump core */
 	}
 
@@ -2917,8 +2917,8 @@ findstemat(
 		if(sp[si].ge != ge) {
 			if(ISDBG(SUBSTEMS)) {
 				fprintf(stderr, 
-					"dbg: possible self-intersection at v=%d o=%d exp_ge=0x%x ge=0x%x\n",
-					value, origin, ge, sp[si].ge);
+					"dbg: possible self-intersection at v=%d o=%d exp_ge=0x%p ge=0x%p\n",
+					value, origin, (void*)ge, (void*)sp[si].ge);
 			}
 			continue;
 		}
@@ -3909,7 +3909,7 @@ fstraighten(
 			if(ge != pge) { 
 				if( pge->type == GE_LINE && pge->fpoints[i][2] == pge->prev->fpoints[i][2]
 				&& abs(pge->fpoints[o][2] != pge->prev->fpoints[o][2]) ) {
-					if(ISDBG(STRAIGHTEN)) fprintf(stderr,"** straighten join with previous 0x%x 0x%x\n", pge, ge);
+					if(ISDBG(STRAIGHTEN)) fprintf(stderr,"** straighten join with previous 0x%p 0x%p\n", (void*)pge, (void*)ge);
 					/* join the previous line with current */
 					pge->fx3 = ge->fx3;
 					pge->fy3 = ge->fy3;
@@ -3924,7 +3924,7 @@ fstraighten(
 			if(ge != nge) { 
 				if (nge->type == GE_LINE && nge->fpoints[i][2] == ge->fpoints[i][2]
 				&& abs(nge->fpoints[o][2] != ge->fpoints[o][2]) ) {
-					if(ISDBG(STRAIGHTEN)) fprintf(stderr,"** straighten join with next 0x%x 0x%x\n", ge, nge);
+					if(ISDBG(STRAIGHTEN)) fprintf(stderr,"** straighten join with next 0x%p 0x%p\n", (void*)ge, (void*)nge);
 					/* join the next line with current */
 					ge->fx3 = nge->fx3;
 					ge->fy3 = nge->fy3;
@@ -4055,8 +4055,8 @@ ffixquadrants(
 	doagain:
 		np = 0; /* no split points yet */
 		if(ISDBG(QUAD)) {
-			fprintf(stderr, "%s: trying 0x%x (%g %g) (%g %g) (%g %g) (%g %g)\n  ", g->name,
-				ge,  ge->prev->fx3, ge->prev->fy3, ge->fx1, ge->fy1, ge->fx2, ge->fy2,
+			fprintf(stderr, "%s: trying 0x%p (%g %g) (%g %g) (%g %g) (%g %g)\n  ", g->name,
+				(void*)ge,  ge->prev->fx3, ge->prev->fy3, ge->fx1, ge->fy1, ge->fx2, ge->fy2,
 				ge->fx3, ge->fy3);
 		}
 		for(i=0; i<2; i++) { /* first for x then for y */
@@ -4076,8 +4076,8 @@ ffixquadrants(
 				continue;
 
 			if(ISDBG(QUAD))
-				fprintf(stderr, "%s: 0x%x: %d pts(%c): ", 
-					g->name, ge, np-oldnp, i? 'y':'x');
+				fprintf(stderr, "%s: 0x%p: %d pts(%c): ", 
+					g->name, (void*)ge, np-oldnp, i? 'y':'x');
 
 			/* remove points that are too close to the ends 
 			 * because hor/vert ends are permitted, also
@@ -4127,8 +4127,8 @@ ffixquadrants(
 			continue;
 
 		if(ISDBG(QUAD)) {
-			fprintf(stderr, "%s: splitting 0x%x (%g %g) (%g %g) (%g %g) (%g %g) at %d points\n  ", g->name,
-				ge,  ge->prev->fx3, ge->prev->fy3, ge->fx1, ge->fy1, ge->fx2, ge->fy2,
+			fprintf(stderr, "%s: splitting 0x%p (%g %g) (%g %g) (%g %g) (%g %g) at %d points\n  ", g->name,
+				(void*)ge,  ge->prev->fx3, ge->prev->fy3, ge->fx1, ge->fy1, ge->fx2, ge->fy2,
 				ge->fx3, ge->fy3, np);
 			for(i=0; i<np; i++)
 				fprintf(stderr, "%g(%c) ", sp[i], dir[i] ? 'y':'x');
@@ -4149,7 +4149,7 @@ ffixquadrants(
 			k1 = sp[j];
 			k2 = 1 - k1;
 
-			if(ISDBG(QUAD)) fprintf(stderr, "   0x%x %g/%g\n", ge, k1, k2);
+			if(ISDBG(QUAD)) fprintf(stderr, "   0x%p %g/%g\n", (void*)ge, k1, k2);
 
 			nge = newgentry(GEF_FLOAT);
 			(*nge) = (*ge);
@@ -4689,8 +4689,8 @@ fdelsmall(
 		/* now we have a sequence of small fragments in pge...nge (inclusive) */
 
 		if(ISDBG(FCONCISE))  {
-			fprintf(stderr, "glyph %s has very small fragments(%x..%x..%x)\n", 
-			g->name, pge, ge, nge);
+			fprintf(stderr, "glyph %s has very small fragments(%p..%p..%p)\n", 
+			g->name, (void*)pge, (void*)ge, (void*)nge);
 			dumppaths(g, pge, nge);
 		}
 
@@ -5864,7 +5864,7 @@ fconcisecontour(
 		return; /* probably a degenerate contour */
 
 	if(ISDBG(FCONCISE))
-		fprintf(stderr, "processing contour 0x%p of glyph %s\n", startge, g->name);
+		fprintf(stderr, "processing contour 0x%p of glyph %s\n", (void*)startge, g->name);
 
 	maxdots = MAXDOTS;
 	dots = (struct dot_dist *)malloc(sizeof(*dots)*maxdots);
@@ -5881,7 +5881,7 @@ fconcisecontour(
 		if((gex->flags & GEXF_JMASK) > ((joinmask<<1)-1)) {
 			if(ISDBG(FCONCISE))
 				fprintf(stderr, "found higher flag (%x>%x) at 0x%p\n", 
-					gex->flags & GEXF_JMASK, ((joinmask<<1)-1), ge);
+					gex->flags & GEXF_JMASK, ((joinmask<<1)-1), (void*)ge);
 			joinmask <<= 1;
 			startge = ge; /* have to redo the pass */
 			continue;
@@ -5903,7 +5903,7 @@ fconcisecontour(
 		pgex = X_CON(pge->bkwd);
 
 		if(ISDBG(FCONCISE))
-			fprintf(stderr, "ge %p prev -> 0x%p ", ge, pge);
+			fprintf(stderr, "ge %p prev -> 0x%p ", (void*)ge, (void*)pge);
 
 		while(pgex->flags & GEXF_JCVMASK) {
 			if( !(pgex->flags & ((GEXF_JCVMASK^GEXF_JID)|GEXF_JID2)) )
@@ -5920,7 +5920,7 @@ fconcisecontour(
 					/* the previos entry is definitely a better match */
 					if(pge == ge) {
 						if(ISDBG(FCONCISE))
-							fprintf(stderr, "\nprev is a better match at %p\n", pge);
+							fprintf(stderr, "\nprev is a better match at %p\n", (void*)pge);
 						startge = ge;
 						goto next;
 					} else
@@ -5933,7 +5933,7 @@ fconcisecontour(
 			pge = pge->bkwd;
 			pgex = X_CON(pge->bkwd);
 			if(ISDBG(FCONCISE))
-				fprintf(stderr, "0x%p ", pge);
+				fprintf(stderr, "0x%p ", (void*)pge);
 		}
 
 		/* collect as many entries for joining as possible */
@@ -5942,7 +5942,7 @@ fconcisecontour(
 		nngex = X_CON(nge->frwd); 
 
 		if(ISDBG(FCONCISE))
-			fprintf(stderr, ": 0x%x\nnext -> 0x%p ", pge, nge);
+			fprintf(stderr, ": 0x%p\nnext -> 0x%p ", (void*)pge, (void*)nge);
 
 		while(ngex->flags & GEXF_JCVMASK) {
 			if( !(ngex->flags & ((GEXF_JCVMASK^GEXF_JID)|GEXF_JID1)) )
@@ -5959,7 +5959,7 @@ fconcisecontour(
 					if(nge == ge->frwd) {
 						if(ISDBG(FCONCISE))
 							fprintf(stderr, "\nnext %x is a better match than %x at %p (jmask %x)\n", 
-								ngex->flags & GEXF_JCVMASK, gex->flags & GEXF_JCVMASK, nge, joinmask);
+								ngex->flags & GEXF_JCVMASK, gex->flags & GEXF_JCVMASK, (void*)nge, joinmask);
 						goto next;
 					} else
 						nge = nge->bkwd;
@@ -5972,11 +5972,11 @@ fconcisecontour(
 			ngex = nngex; 
 			nngex = X_CON(nge->frwd);
 			if(ISDBG(FCONCISE))
-				fprintf(stderr, "0x%p ", nge);
+				fprintf(stderr, "0x%p ", (void*)nge);
 		}
 
 		if(ISDBG(FCONCISE))
-			fprintf(stderr, ": 0x%x\n", nge);
+			fprintf(stderr, ": 0x%p\n", (void*)nge);
 
 		/* XXX add splitting of last entries if neccessary */
 
@@ -6078,7 +6078,7 @@ fconcisecontour(
 					ggoodcv++; ggoodcvdots += ndots;
 
 					if(ISDBG(FCONCISE)) {
-						fprintf(stderr, "in %s joined %p-%p to ", g->name, pge, nge);
+						fprintf(stderr, "in %s joined %p-%p to ", g->name, (void*)pge, (void*)nge);
 						for(i=0; i<4; i++) {
 							fprintf(stderr, " (%g, %g)", apcv[i][X], apcv[i][Y]);
 						}
@@ -6145,7 +6145,7 @@ fconcisecontour(
 				nge = nge->bkwd;
 			}
 			if(ISDBG(FCONCISE))
-				fprintf(stderr, "next try: %p to %p\n", pge, nge);
+				fprintf(stderr, "next try: %p to %p\n", (void*)pge, (void*)nge);
 		}
 
 next:
@@ -6173,17 +6173,17 @@ next:
 		nge = ge->frwd;
 
 		if(ISDBG(FCONCISE))
-			fprintf(stderr, "joining LINE from %p-%p\n", ge, nge);
+			fprintf(stderr, "joining LINE from %p-%p\n", (void*)ge, (void*)nge);
 
 		while(pge!=nge) {
 			pgex = X_CON(pge);
 			ngex = X_CON(nge); 
 			if(ISDBG(FCONCISE))
-				fprintf(stderr, "(p=%p/%x n=0x%x/%x) ", pge, pgex->flags & GEXF_JLINE, 
-					nge, ngex->flags & GEXF_JLINE);
+				fprintf(stderr, "(p=%p/%x n=0x%p/%x) ", (void*)pge, pgex->flags & GEXF_JLINE, 
+					(void*)nge, ngex->flags & GEXF_JLINE);
 			if( !((pgex->flags | ngex->flags) & GEXF_JLINE) ) {
 				if(ISDBG(FCONCISE))
-					fprintf(stderr, "(end p=%p n=%p) ", pge, nge);
+					fprintf(stderr, "(end p=%p n=%p) ", (void*)pge, (void*)nge);
 				break;
 			}
 
@@ -6209,19 +6209,19 @@ next:
 				}
 				if(i<ndots) { /* failed to join */
 					if(ISDBG(FCONCISE))
-						fprintf(stderr, "failed to join prev %p ", pge);
+						fprintf(stderr, "failed to join prev %p ", (void*)pge);
 					ndots--;
 					pgex->flags &= ~GEXF_JLINE;
 				} else {
 					pge = pge->bkwd;
 					if(pge == nge) {
 						if(ISDBG(FCONCISE))
-							fprintf(stderr, "intersected at prev %p ", pge);
+							fprintf(stderr, "intersected at prev %p ", (void*)pge);
 						break; /* oops, tried to self-intersect */
 					}
 				}
 			} else if(ISDBG(FCONCISE))
-				fprintf(stderr, "(p=%p) ", pge);
+				fprintf(stderr, "(p=%p) ", (void*)pge);
 
 			if( ngex->flags & GEXF_JLINE ) {
 				for(i=0; i<2; i++) {
@@ -6237,14 +6237,14 @@ next:
 				}
 				if(i<ndots) { /* failed to join */
 					if(ISDBG(FCONCISE))
-						fprintf(stderr, "failed to join next %p ", nge->frwd);
+						fprintf(stderr, "failed to join next %p ", (void*)nge->frwd);
 					ndots--;
 					ngex->flags &= ~GEXF_JLINE;
 				} else {
 					nge = nge->frwd;
 				}
 			} else if(ISDBG(FCONCISE))
-				fprintf(stderr, "(n=%p) ", nge);
+				fprintf(stderr, "(n=%p) ", (void*)nge);
 		}
 
 		pge = pge->frwd;  /* now the limits are pge...nge inclusive */
@@ -6252,7 +6252,7 @@ next:
 			break;
 
 		if(ISDBG(FCONCISE)) {
-			fprintf(stderr, "\nin %s joined LINE %p-%p from\n", g->name, pge, nge);
+			fprintf(stderr, "\nin %s joined LINE %p-%p from\n", g->name, (void*)pge, (void*)nge);
 			dumppaths(g, pge, nge);
 		}
 		pge->type = GE_LINE;
@@ -7068,7 +7068,7 @@ reversepathsfromto(
 	for (ge = from; ge != 0 && ge != to; ge = ge->next) {
 		if(ge->type == GE_LINE || ge->type == GE_CURVE) {
 			if (ISDBG(REVERSAL))
-				fprintf(stderr, "reverse path 0x%x <- 0x%x, 0x%x\n", ge, ge->prev, ge->bkwd);
+				fprintf(stderr, "reverse path 0x%p <- 0x%p, 0x%p\n", (void*)ge, (void*)ge->prev, (void*)ge->bkwd);
 
 			/* cut out the path itself */
 			pge = ge->prev; /* GE_MOVE */
@@ -7217,7 +7217,7 @@ print_kerning(
 		return;
 
 	fprintf(afm_file, "StartKernData\n");
-	fprintf(afm_file, "StartKernPairs %hd\n", kerning_pairs);
+	fprintf(afm_file, "StartKernPairs %d\n", kerning_pairs);
 
 	for(i=0; i<numglyphs; i++)  {
 		g = &glyph_list[i];

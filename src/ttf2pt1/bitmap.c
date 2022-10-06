@@ -190,7 +190,7 @@ gex_dump_contour(
 		fprintf(stderr, "%-8s", gxf_name[j]);
 		for(i = 0; i < clen; i++, ge = ge->frwd)
 			fprintf(stderr, " %2d", X_FRAG(ge)->len[j]);
-		fprintf(stderr, " %p\n (back) ", ge);
+		fprintf(stderr, " %p\n (back) ", (void*)ge);
 		for(i = 0; i < clen; i++, ge = ge->frwd)
 			fprintf(stderr, " %2d", X_FRAG(ge)->lenback[j]);
 		fprintf(stderr, "\n");
@@ -487,7 +487,7 @@ dosubfrag(
 			xf = lf; /* the symmetric fragment */
 		}
 		fprintf(stderr, "     sym with %p f=%d(%p) e=%d(%p) a1=%c a2=%c sympt=%g\n",
-			xf, symfront, pf, symend, lf,
+			(void*)xf, symfront, (void*)pf, symend, (void*)lf,
 			a1 ? 'Y': 'X', a2 ? 'Y': 'X', sympt
 		);
 		for(i=0; i<4; i++) {
@@ -583,7 +583,7 @@ dosubfrag(
 		ndots--;
 	if( fcrossrayscv(f->vect, NULL, NULL) == 0) {
 		fprintf(stderr, "**** Internal error: rays must cross but don't at %p-%p\n",
-			ge, gel);
+			(void*)ge, (void*)gel);
 		fprintf(stderr, "  (%g, %g) (%g, %g) (%g, %g) (%g, %g)\n", 
 			limfront[0], limfront[1],
 			fixfront[0], fixfront[1],
@@ -649,7 +649,7 @@ frag_subtract(
 			for(pge = ge->frwd, j = slen-1; j > 0; pge = pge->frwd, j--)
 				X_FRAG(pge)->lenback[d] = 0;
 			fprintf(stderr, "    cut %s circular frag to %p-%p\n", 
-				gxf_name[d], pge, ge);
+				gxf_name[d], (void*)pge, (void*)ge);
 			gex_dump_contour(ge, clen);
 		} else {
 			/* when we chop off a piece of fragment, we leave the remaining
@@ -657,7 +657,7 @@ frag_subtract(
 			 * of the line fragment under consideration
 			 */
 			fprintf(stderr, "    cut %s frag at %p from len=%d to len=%d (end %p)\n", 
-				gxf_name[d], pge, pf->len[d], len+1, ge);
+				gxf_name[d], (void*)pge, pf->len[d], len+1, (void*)ge);
 			j = pf->len[d] - len - 1; /* how many gentries are chopped off */
 			pf->len[d] = len + 1;
 			i = slen - 1;
@@ -671,11 +671,11 @@ frag_subtract(
 				 */
 
 				fprintf(stderr, "    end of %s frag len=%d %p-", 
-					gxf_name[d], j+1, pge->bkwd);
+					gxf_name[d], j+1, (void*)pge->bkwd);
 				X_FRAG(pge->bkwd)->len[d] = j+1; /* the overlapping */
 				for(i = 1; j > 0; j--, i++, pge = pge->frwd)
 					X_FRAG(pge)->lenback[d] = i;
-				fprintf(stderr, "%p\n", pge->bkwd);
+				fprintf(stderr, "%p\n", (void*)pge->bkwd);
 				gex_dump_contour(ge, clen);
 			}
 		}
@@ -697,7 +697,7 @@ frag_subtract(
 			j = pf->len[d]; 
 			if(j != 0) {
 				fprintf(stderr, "    removed %s frag at %p len=%d\n", 
-					gxf_name[d], pge, j);
+					gxf_name[d], (void*)pge, j);
 				gex_dump_contour(ge, clen);
 				pf->len[d] = 0;
 				j--;
@@ -707,11 +707,11 @@ frag_subtract(
 	/* pge points at the last gentry of the line fragment */
 	if(j > 1) { /* we have the tail of a fragment left */
 		fprintf(stderr, "    end of %s frag len=%d %p-", 
-			gxf_name[d], j, pge);
+			gxf_name[d], j, (void*)pge);
 		X_FRAG(pge)->len[d] = j; /* the overlapping */
 		for(i = 0; j > 0; j--, i++, pge = pge->frwd)
 			X_FRAG(pge)->lenback[d] = i;
-		fprintf(stderr, "%p\n", pge->bkwd);
+		fprintf(stderr, "%p\n", (void*)pge->bkwd);
 		gex_dump_contour(ge, clen);
 	} else if(j == 1) {
 		X_FRAG(pge)->lenback[d] = 0;
@@ -1098,7 +1098,7 @@ bmp_outline(
 						if( isign(ge->frwd->ipoints[i][2] - ge->ipoints[i][2])
 						* isign(ge->bkwd->bkwd->ipoints[i][2] - ge->bkwd->ipoints[i][2]) == 1) {
 							X_FRAG(ge)->flags |= GEXFF_EXTR;
-							fprintf(stderr, "  %s extremum at %p\n", (i?"vert":"hor"), ge);
+							fprintf(stderr, "  %s extremum at %p\n", (i?"vert":"hor"), (void*)ge);
 						}
 						if(abs(ge->ipoints[i][2] - ge->bkwd->ipoints[i][2]) > 1)
 							X_FRAG(ge)->flags |= GEXFF_LONG;
@@ -1184,7 +1184,7 @@ bmp_outline(
 		dy = (ge)->iy3 - (ge)->bkwd->bkwd->iy3; \
 		if(0 && msg) { \
 			fprintf(stderr, "  %p: dx=%d dy=%d dx0=%d dy0=%d ", \
-				(ge), dx, dy, lastdx, lastdy); \
+				((void*)ge), dx, dy, lastdx, lastdy); \
 		} \
 		k1 = X_FRAG(ge)->flags; \
 		k2 = X_FRAG((ge)->bkwd)->flags; \
@@ -1213,7 +1213,7 @@ bmp_outline(
 		} \
 		if(0 && msg) { \
 			fprintf(stderr, "k1=%d k2=%d pge=%p count=%d %s good=%d rev=%d\n", \
-				k1, k2, pge, count, gxf_name[d], good, reversal); \
+				k1, k2, (void*)pge, count, gxf_name[d], good, reversal); \
 		} \
 	} while(0)
 
@@ -1765,7 +1765,7 @@ bmp_outline(
 						if(f->len[d] == 3) {
 							pge = age[(f->aidx + 2)%clen]; /* last gentry of this frag */
 							if(f->lenback[d] == 0 && X_FRAG(pge)->len[d] == 0) {
-								fprintf(stderr, "    discarded small %s at %p-%p\n", gxf_name[d], ge, pge);
+								fprintf(stderr, "    discarded small %s at %p-%p\n", gxf_name[d], (void*)ge, (void*)pge);
 								f->len[d] = 0;
 								X_FRAG(ge->frwd)->lenback[d] = 0;
 								X_FRAG(ge->frwd->frwd)->lenback[d] = 0;
@@ -1813,7 +1813,7 @@ bmp_outline(
 						continue;
 					}
 
-					fprintf(stderr, "   line at %p len=%d\n", ge, f->len[GEXFI_EXACTLINE]);
+					fprintf(stderr, "   line at %p len=%d\n", (void*)ge, f->len[GEXFI_EXACTLINE]);
 					for(d = GEXFI_CONVEX; d<= GEXFI_CONCAVE; d++) {
 						frag_subtract(g, age, clen, ge, len, d);
 					}
@@ -1855,7 +1855,7 @@ bmp_outline(
 								if(f->len[d] == len || f->len[d] == len+1) {
 
 									fprintf(stderr, "    removed %s frag at %p len=%d linelen=%d\n", 
-										gxf_name[d], ge, f->len[d], len);
+										gxf_name[d], (void*)ge, f->len[d], len);
 									pge = ge->frwd;
 									for(i = f->len[d]; i > 1; i--, pge = pge->frwd)
 										X_FRAG(pge)->lenback[d] = 0;
@@ -1864,7 +1864,7 @@ bmp_outline(
 									done = 1;
 								} else if(pf->len[d] == len+1 || pf->len[d] == len+sharpness) {
 									fprintf(stderr, "    removed %s frag at %p len=%d next linelen=%d\n", 
-										gxf_name[d], ge->bkwd, pf->len[d], len);
+										gxf_name[d], (void*)ge->bkwd, pf->len[d], len);
 									pge = ge;
 									for(i = pf->len[d]; i > 1; i--, pge = pge->frwd)
 										X_FRAG(pge)->lenback[d] = 0;
@@ -1935,7 +1935,7 @@ bmp_outline(
 					|| f->len[GEXFI_CONCAVE] >= len) {
 				line_completely_covered:
 						fprintf(stderr, "    removed covered Line frag at %p len=%d\n", 
-							ge, len);
+							(void*)ge, len);
 						f->len[GEXFI_LINE] = 0;
 						for(pge = ge->frwd; len > 1; len--, pge = pge->frwd)
 							X_FRAG(pge)->lenback[GEXFI_LINE] = 0;
@@ -1986,7 +1986,7 @@ bmp_outline(
 					}
 					if(k1 != 0 || k2 != 0) {
 						fprintf(stderr, "    cut Line frag at %p by (%d,%d) to len=%d\n", 
-							ge, k1, k2, len);
+							(void*)ge, k1, k2, len);
 						gex_dump_contour(ge, clen);
 
 						goto reconsider_line; /* the line may have to be cut again */
@@ -1997,7 +1997,7 @@ bmp_outline(
 						for(d = GEXFI_CONVEX; d<= GEXFI_CONCAVE; d++) {
 							if(X_FRAG(pge)->len[d]) {
 								fprintf(stderr, "    removed %s frag at %p len=%d covered by line %d\n", 
-									gxf_name[d], pge, X_FRAG(pge)->len[d], len);
+									gxf_name[d], (void*)pge, X_FRAG(pge)->len[d], len);
 								good = 0;
 							}
 							X_FRAG(pge)->len[d] = 0;
@@ -2036,7 +2036,7 @@ bmp_outline(
 							curve_completely_covered:
 								/* remove the convex frag */
 								fprintf(stderr, "    removed %s frag at %p len=%d covered by %s\n", 
-									gxf_name[d], ge, len, gxf_name[dx]);
+									gxf_name[d], (void*)ge, len, gxf_name[dx]);
 								f->len[d] = 0;
 								for(pge = ge->frwd, j = 1; j < len; j++, pge = pge->frwd)
 									X_FRAG(pge)->lenback[d] = 0;
@@ -2047,7 +2047,7 @@ bmp_outline(
 							} else {
 								/* remove the concave frag */
 								fprintf(stderr, "    removed %s frag at %p len=%d covered by %s\n", 
-									gxf_name[dx], ge, i, gxf_name[d]);
+									gxf_name[dx], (void*)ge, i, gxf_name[d]);
 								f->len[dx] = 0;
 								for(pge = ge->frwd, j = 1; j < i; j++, pge = pge->frwd)
 									X_FRAG(pge)->lenback[dx] = 0;
@@ -2069,7 +2069,7 @@ bmp_outline(
 							/* i >= 2 by definition */
 							if(i >= k2-1) { /* covers the other frag - maybe with 1 gentry showing */
 								fprintf(stderr, "    removed %s frag at %p len=%d covered by %s\n", 
-									gxf_name[dx], pge, k2, gxf_name[d]);
+									gxf_name[dx], (void*)pge, k2, gxf_name[d]);
 								X_FRAG(pge)->len[dx] = 0;
 								for(pge = pge->frwd, j = 1; j < k2; j++, pge = pge->frwd)
 									X_FRAG(pge)->lenback[dx] = 0;
@@ -2077,7 +2077,7 @@ bmp_outline(
 									/* our frag will be removed as well, prepare a line to replace it */
 									gels = ge;
 									gele = age[(f->aidx + i - 1)%clen];
-									fprintf(stderr, "    new Line frag at %p-%p len=%d\n", gels, gele, i);
+									fprintf(stderr, "    new Line frag at %p-%p len=%d\n", (void*)gels, (void*)gele, i);
 									X_FRAG(gels)->len[GEXFI_LINE] = i;
 									for(gei = gels->frwd, j = 1; j < i; gei = gei->frwd, j++)
 										X_FRAG(gei)->lenback[GEXFI_LINE] = j;
@@ -2120,7 +2120,7 @@ bmp_outline(
 							if(j != k2) {
 								X_FRAG(pge)->len[dx] = j;
 								fprintf(stderr, "    cut %s frag at %p len=%d to %p len=%d end overlap with %s\n", 
-									gxf_name[dx], pge, k2, gels, j, gxf_name[d]);
+									gxf_name[dx], (void*)pge, k2, (void*)gels, j, gxf_name[d]);
 								for(gei = gels->frwd; j < k2; gei = gei->frwd, j++)
 									X_FRAG(gei)->lenback[dx] = 0;
 							}
@@ -2128,20 +2128,20 @@ bmp_outline(
 							if(gele != ge) {
 								sge = gele;
 								f->len[d] = 0;
-								fprintf(stderr, "    cut %s frag at %p len=%d ", gxf_name[d], ge, len);
+								fprintf(stderr, "    cut %s frag at %p len=%d ", gxf_name[d], (void*)ge, len);
 								len--;
 								for(gei = ge->frwd; gei != gele; gei = gei->frwd, len--)
 									X_FRAG(gei)->lenback[d] = 0;
 								X_FRAG(gele)->len[d] = len;
 								X_FRAG(gele)->lenback[d] = 0;
 								fprintf(stderr, "to %p len=%d start overlap with %s\n", 
-									sge, len, gxf_name[dx]);
+									(void*)sge, len, gxf_name[dx]);
 								for(gei = gei->frwd, j = 1; j < len; gei = gei->frwd, j++)
 									X_FRAG(gei)->lenback[d] = j;
 
 							}
 							if(i > 1) {
-								fprintf(stderr, "    new Line frag at %p-%p len=%d\n", gels, gele, i);
+								fprintf(stderr, "    new Line frag at %p-%p len=%d\n", (void*)gels, (void*)gele, i);
 								X_FRAG(gels)->len[GEXFI_LINE] = i;
 								for(gei = gels->frwd, j = 1; j < i; gei = gei->frwd, j++)
 									X_FRAG(gei)->lenback[GEXFI_LINE] = j;
@@ -2171,7 +2171,7 @@ bmp_outline(
 							if(dx >= 0) {
 								fprintf(stderr, "**** Internal error in vectorization\n");
 								fprintf(stderr, "CONFLICT in %s at %p between %s and %s\n",
-									g->name, ge, gxf_name[dx], gxf_name[d]);
+									g->name, (void*)ge, gxf_name[dx], gxf_name[d]);
 								dumppaths(g, cge->next, cge->next->bkwd);
 								gex_dump_contour(ge, clen);
 								exit(1);
@@ -2182,7 +2182,7 @@ bmp_outline(
 							if(dy >= 0) {
 								fprintf(stderr, "**** Internal error in vectorization\n");
 								fprintf(stderr, "CONFLICT in %s at %p between %s and %s\n",
-									g->name, ge, gxf_name[dy], gxf_name[d]);
+									g->name, (void*)ge, gxf_name[dy], gxf_name[d]);
 								dumppaths(g, cge->next, cge->next->bkwd);
 								gex_dump_contour(ge, clen);
 								exit(1);
@@ -2360,7 +2360,7 @@ bmp_outline(
 						}
 
 						fprintf(stderr, " %s frag %p%s nsub=%d\n", gxf_name[f->ixstart],
-							ge, (f->flags&GEXFF_CIRC)?" circular":"", nsub);
+							(void*)ge, (f->flags&GEXFF_CIRC)?" circular":"", nsub);
 
 						/* find the symmetry between the subfragments */
 						for(gef = firstge, count=0; count < nsub; gef = ff->nextsub, count++) {
@@ -2480,7 +2480,7 @@ bmp_outline(
 							/* debugging stuff */
 							ff = X_FRAG(gef);
 							fprintf(stderr, "   %p-%p bbox[%g,%g] sym=%p %s len=%d xlen=%d\n",
-								gef, ff->nextsub, ff->bbox[0], ff->bbox[1], ff->symge, 
+								(void*)gef, (void*)ff->nextsub, ff->bbox[0], ff->bbox[1], (void*)ff->symge, 
 								(ff->flags & GEXFF_SYMNEXT) ? "symnext" : "",
 								ff->sublen, ff->symxlen);
 

@@ -475,7 +475,7 @@ static struct uni_language uni_lang[]= {
 		{ "hu_","pl_","cz_","si_","sk_" },
 		'A'
 	},
-	{ /* by Rièardas Èepas <rch@WriteMe.Com> */
+	{ /* by Riï¿½ardas ï¿½epas <rch@WriteMe.Com> */
 		{ unicode_latin4 }, 
 		0, /* no name-based mapping */
 		"latin4",
@@ -644,7 +644,7 @@ unicode_init_user(
 			continue;
 		}
 
-		if(sscanf(buffer, "id %d %d", pid, eid)==2) {
+		if(sscanf(buffer, "id %d %d", &pid, &eid)==2) {
 			if( !overid /* only if the user has not overriden */
 			&& (enabled || !sawplane) ) { 
 				force_pid = pid; force_eid = eid;
@@ -2399,7 +2399,7 @@ main(
 	fprintf(pfa_file, "/UnderlinePosition %d def\n",
 		iscale(fontm.underline_position));
 
-	fprintf(pfa_file, "/UnderlineThickness %hd def\nend readonly def\n",
+	fprintf(pfa_file, "/UnderlineThickness %d def\nend readonly def\n",
 		iscale(fontm.underline_thickness));
 
 	fprintf(afm_file, "UnderlineThickness %d\n",
