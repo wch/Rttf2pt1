@@ -371,7 +371,7 @@ static void charstring_byte(int v)
   byte b = (byte) (v & 0xff);
 
   if (charstring_bp - charstring_buf > sizeof(charstring_buf)) {
-    fprintf(stderr, "error: charstring_buf full (%d bytes)\n",
+    fprintf(stderr, "error: charstring_buf full (%zu bytes)\n",
             sizeof(charstring_buf));
     exit(1);
   }
@@ -385,7 +385,7 @@ static void charstring_end()
 {
   byte *bp;
 
-  sprintf(line, "%d ", charstring_bp - charstring_buf);
+  sprintf(line, "%ld ", charstring_bp - charstring_buf);
   eexec_string(line);
   sprintf(line, "%s ", cs_start);
   eexec_string(line);
