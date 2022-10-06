@@ -1,3 +1,8 @@
+Version 1.3.10.9000
+-------------
+
+* Closed #15: fixed `-Wformat` and `-Wformat-pedantic` warnings, which raise significant warnings on R-devel. (#16)
+
 Version 1.3.10
 -------------
 
