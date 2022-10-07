@@ -170,7 +170,7 @@ static byte cencrypt(byte plain)
 
 /* This function flushes a buffered PFB block. */
 
-static void output_block()
+static void output_block(void)
 {
   int32 i;
 
@@ -247,7 +247,7 @@ static void eexec_string(char *string)
    PFB format then flush current ASCII block and get ready for binary block.
    We start encryption with four random (zero) bytes. */
 
-static void eexec_start()
+static void eexec_start(void)
 {
   eexec_string(line);
   if (pfb) {
@@ -267,7 +267,7 @@ static void eexec_start()
    If output is in PFB format then this entails flushing binary block and
    starting an ASCII block. */
 
-static void eexec_end()
+static void eexec_end(void)
 {
   int i, j;
 
@@ -292,7 +292,7 @@ static void eexec_end()
    If output is in PFB format then this entails flushing binary block and
    starting an ASCII block. */
 
-static void file_end()
+static void file_end(void)
 {
   if (pfb) {
     output_block();
@@ -306,7 +306,7 @@ static void file_end()
    the newline is put into line[].  When terminated by '{', the '{' is not put
    into line[], and the flag start_charstring is set to 1. */
 
-static void t1asm_getline()
+static void t1asm_getline(void)
 {
   int c;
   char *p = line;
@@ -354,7 +354,7 @@ static int is_integer(char *string)
 /* This function initializes charstring encryption.  Note that this is called
    at the beginning of every charstring. */
 
-static void charstring_start()
+static void charstring_start(void)
 {
   int i;
 
@@ -381,7 +381,7 @@ static void charstring_byte(int v)
 /* This function outputs buffered, encrypted charstring data through possible
    eexec encryption. */
 
-static void charstring_end()
+static void charstring_end(void)
 {
   byte *bp;
 
@@ -425,7 +425,7 @@ static void charstring_int(int num)
 /* This function parses an entire charstring into integers and commands,
    outputting bytes through the charstring buffer. */
 
-static void parse_charstring()
+static void parse_charstring(void)
 {
   struct command *cp;
 
@@ -460,7 +460,7 @@ static void parse_charstring()
   charstring_end();
 }
 
-static void usage()
+static void usage(void)
 {
   fprintf(stderr,
           "usage: t1asm [-b] [-l block-length] [input [output]]\n");
@@ -473,7 +473,7 @@ static void usage()
   exit(1);
 }
 
-static void print_banner()
+static void print_banner(void)
 {
   static char rcs_revision[] = ""; /* removed RCS */
   static char revision[20];
