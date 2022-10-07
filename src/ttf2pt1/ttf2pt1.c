@@ -656,7 +656,7 @@ unicode_init_user(
 		if( !enabled )
 			continue; /* skip to the next plane */
 
-		if( sscanf(buffer, "at %i", &curpos) == 1 ) {
+		if( sscanf(buffer, "at %i", (int*)&curpos) == 1 ) {
 			if(curpos > 255) {
 				fprintf(stderr, "**** map file '%s' line %d: code over 255\n", path, lineno);
 				exit(1);
@@ -685,7 +685,7 @@ unicode_init_user(
 			}
 		}
 		/* try the compact sequence format */
-		else if( (n=sscanf(buffer, " %i%n", &unicode, &cnt)) == 1 ) {
+		else if( (n=sscanf(buffer, " %i%n", (int*)&unicode, &cnt)) == 1 ) {
 			p = buffer;
 			do {
 				if(curpos > 255) {
@@ -700,7 +700,7 @@ unicode_init_user(
 					if(ISDBG(EXTMAP)) fprintf(stderr, "=== next: '%c'\n", next);
 					p += cnt;
 					if( next == '-' ) { /* range */
-						if ( sscanf(p, " %i%n", &unicode2, &cnt) != 1 ) {
+						if ( sscanf(p, " %i%n", (int*)&unicode2, &cnt) != 1 ) {
 							fprintf(stderr, "**** map file '%s' line %d: missing end of range\n", path, lineno);
 							exit(1);
 						}
@@ -717,7 +717,7 @@ unicode_init_user(
 						}
 					}
 				}
-			} while ( sscanf(p, " %i%n", &unicode, &cnt) == 1 );
+			} while ( sscanf(p, " %i%n", (int*)&unicode, &cnt) == 1 );
 		}
 
 	}
@@ -1078,7 +1078,7 @@ unicode_plane(
 		arg += 2;
 		c2 = sscanf(arg, "%x", &plane);
 	} else {
-		c2 = sscanf(arg, "%d", &plane);
+		c2 = sscanf(arg, "%u", &plane);
 	}
 
 	if( (c1!=2 && c1!=0) || (c1==0 && c2==0) ) {
