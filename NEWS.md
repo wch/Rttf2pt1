@@ -1,10 +1,10 @@
-Version 1.3.10.9000
--------------
+Version 1.3.11
+--------------
 
 * Closed #15, #17: fixed `-Wformat` and `-Wformat-pedantic` warnings, which raise significant warnings on R-devel. (#16, #18)
 
 Version 1.3.10
--------------
+--------------
 
 * Fixed signed/unsigned type mismatches.
 
