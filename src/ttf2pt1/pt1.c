@@ -4937,8 +4937,7 @@ fcrossraysge(
 	GENTRY *ge2,
 	double *max1,
 	double *max2,
-	double** crossdot
-	// double crossdot[2][2]
+	double crossdot[2][2]
 )
 {
 	ray[0].x1 = ge1->prev->fx3;
@@ -4958,7 +4957,7 @@ fcrossraysge(
 	}
 	ray[1].maxp = max2;
 
-	return fcrossraysxx((double (*)[2])crossdot);
+	return fcrossraysxx(crossdot);
 }
 
 /* debugging printout functions */
@@ -6048,7 +6047,7 @@ fconcisecontour(
 
 			fnormalizege(&tpge);
 			fnormalizege(&tnge);
-			if( fcrossraysge(&tpge, &tnge, NULL, NULL, (double**)&apcv[1]) ) {
+			if( fcrossraysge(&tpge, &tnge, NULL, NULL, &apcv[1]) ) {
 				apcv[0][X] = tpge.bkwd->fx3;
 				apcv[0][Y] = tpge.bkwd->fy3;
 				/* apcv[1] and apcv[2] were filled by fcrossraysge() */
