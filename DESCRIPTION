@@ -26,4 +26,4 @@ Depends:
 License: file LICENSE
 URL: https://github.com/wch/Rttf2pt1
 Encoding: UTF-8
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 7.2.3
