@@ -1,3 +1,7 @@
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/wch/Rttf2pt1/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/wch/Rttf2pt1/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 # Rttf2pt1
 
 The Rttf2p1 package for R is meant to be used with the [extrafont](https://github.com/wch/extrafont) package.
