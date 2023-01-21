@@ -4907,7 +4907,8 @@ fcrossraysxx(
 
 int
 fcrossrayscv(
-	double curve[4][2 /*X,Y*/],
+	// double curve[4][2 /*X,Y*/],
+	double (*curve)[2 /*X,Y*/],
 	double *max1,
 	double *max2
 )
@@ -4937,7 +4938,8 @@ fcrossraysge(
 	GENTRY *ge2,
 	double *max1,
 	double *max2,
-	double crossdot[2][2]
+	// double crossdot[2][2]
+	double (*crossdot)[2]
 )
 {
 	ray[0].x1 = ge1->prev->fx3;
@@ -4993,7 +4995,8 @@ printseg(
 
 double
 fdotsegdist2(
-	double seg[2][2 /*X,Y*/],
+	// double seg[2][2 /*X,Y*/],
+	double (*seg)[2 /*X,Y*/],
 	double dot[2 /*X,Y*/]
 )
 {
@@ -5085,7 +5088,8 @@ fdotsegdist2(
 
 double
 fdotcurvdist2(
-	double curve[4][2 /*X,Y*/ ],
+	// double curve[4][2 /*X,Y*/ ],
+	double (*curve)[2 /*X,Y*/ ],
 	struct dot_dist *dots,
 	int ndots, /* number of entries in dots */
 	double *maxp
@@ -5267,7 +5271,8 @@ fdotcurvdist2(
 
 void
 fapproxcurve(
-	double cv[4][2 /*X,Y*/ ], /* points 0-3 are passed in, points 1,2 - out */
+	// double cv[4][2 /*X,Y*/ ], /* points 0-3 are passed in, points 1,2 - out */
+	double (*cv)[2 /*X,Y*/ ], /* points 0-3 are passed in, points 1,2 - out */
 	struct dot_dist *dots, /* the dots to approximate - distances returned 
 		* there may be invalid */
 	int ndots

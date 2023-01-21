@@ -249,9 +249,15 @@ void docorrectwidth(void);
 void addkernpair( unsigned id1, unsigned id2, int unscval);
 void print_kerning( FILE *afm_file);
 
-int fcrossrayscv( double curve[4][2], double *max1, double *max2);
+//int fcrossrayscv( double curve[4][2], double *max1, double *max2);
+int fcrossrayscv( double (*curve)[2], double *max1, double *max2);
+// int fcrossraysge( GENTRY *ge1, GENTRY *ge2, double *max1, double *max2,
+// 	double crossdot[2][2]);
 int fcrossraysge( GENTRY *ge1, GENTRY *ge2, double *max1, double *max2,
-	double crossdot[2][2]);
-double fdotsegdist2( double seg[2][2], double dot[2]);
-double fdotcurvdist2( double curve[4][2], struct dot_dist *dots, int ndots, double *maxp);
-void fapproxcurve( double cv[4][2], struct dot_dist *dots, int ndots);
+	double (*crossdot)[2]);
+// double fdotsegdist2( double seg[2][2], double dot[2]);
+double fdotsegdist2( double (*seg)[2], double dot[2]);
+// double fdotcurvdist2( double curve[4][2], struct dot_dist *dots, int ndots, double *maxp);
+double fdotcurvdist2( double (*curve)[2], struct dot_dist *dots, int ndots, double *maxp);
+// void fapproxcurve( double cv[4][2], struct dot_dist *dots, int ndots);
+void fapproxcurve( double (*cv)[2], struct dot_dist *dots, int ndots);
