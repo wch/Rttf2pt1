@@ -1,23 +1,25 @@
 Package: Rttf2pt1
 Title: 'ttf2pt1' Program
-Version: 1.3.12
-Author: Winston Chang,
-    Andrew Weeks,
-    Frank M. Siegert,
-    Mark Heath,
-    Thomas Henlick,
-    Sergey Babkin,
-    Turgut Uyar,
-    Rihardas Hepas,
-    Szalay Tamas,
-    Johan Vromans,
-    Petr Titera,
-    Lei Wang,
-    Chen Xiangyang,
-    Zvezdan Petkovic,
-    Rigel,
-    I. Lee Hetherington
-Maintainer: Winston Chang <winston@stdout.org>
+Version: 1.3.13
+Authors@R:
+  c(
+    person(given = "Winston", family = "Chang", role = c("aut", "cre"), email = "winston@stdout.org"),
+    person(given = "Andrew", family = "Weeks", role = "aut"),
+    person(given = c("Frank", "M."), family = "Siegert", role = "aut"),
+    person(given = "Mark", family = "Heath", role = "aut"),
+    person(given = "Thomas", family = "Henlick", role = "aut"),
+    person(given = "Sergey", family = "Babkin", role = "aut"),
+    person(given = "Turgut", family = "Uyar", role = "aut"),
+    person(given = "Rihardas", family = "Hepas", role = "aut"),
+    person(given = "Szalay", family = "Tamas", role = "aut"),
+    person(given = "Johan", family = "Vromans", role = "aut"),
+    person(given = "Petr", family = "Titera", role = "aut"),
+    person(given = "Lei", family = "Wang", role = "aut"),
+    person(given = "Chen", family = "Xiangyang", role = "aut"),
+    person(given = "Zvezdan", family = "Petkovic", role = "aut"),
+    person(family = "Rigel", role = "aut"),
+    person(given = c("I.", "Lee"), family = "Hetherington", role = "aut")
+  )
 Description: Contains the program 'ttf2pt1', for use with the
     'extrafont' package. This product includes software developed by the 'TTF2PT1'
     Project and its contributors.
