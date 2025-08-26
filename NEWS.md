@@ -1,3 +1,9 @@
+
+Version 1.3.12.9000
+--------------
+
+* Fixed DESCRIPTION i.r.t. Authors@R field (required in upcoming R-devel, flagged by CRAN checks)
+
 Version 1.3.12
 --------------
 
