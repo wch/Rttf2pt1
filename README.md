@@ -1,6 +1,5 @@
-<!-- badges: start -->
-[![R-CMD-check](https://github.com/wch/Rttf2pt1/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/wch/Rttf2pt1/actions/workflows/R-CMD-check.yaml)
-<!-- badges: end -->
+**NOTE: As of 2022-09-23, Frederic Bertrand has taken over maintainership of this package, and this repository is no longer active. The new active repository is at https://github.com/fbertran/Rttf2pt1**
+
 
 # Rttf2pt1
 
