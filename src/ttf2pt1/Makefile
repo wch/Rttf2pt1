@@ -203,7 +203,7 @@ runt1asm.o: runt1asm.c global.h
 	$(CC) $(CFLAGS) $(CFLAGS_EXTT1ASM) -c runt1asm.c
 
 ttf2pt1:	ttf2pt1.o pt1.o runt1asm.o ttf.o ft.o bdf.o bitmap.o
-	$(CC) $(CFLAGS) -o ttf2pt1 ttf2pt1.o pt1.o runt1asm.o ttf.o ft.o bdf.o bitmap.o $(LIBS)
+	$(CC) $(LDFLAGS) -o ttf2pt1 ttf2pt1.o pt1.o runt1asm.o ttf.o ft.o bdf.o bitmap.o $(LIBS)
 
 CHANGES: CHANGES.html
 	scripts/unhtml <CHANGES.html >CHANGES
